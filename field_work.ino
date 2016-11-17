@@ -15,6 +15,10 @@ unsigned long time8 = 0;
 unsigned long time9 = 0;
 unsigned long time10 = 0;
 unsigned long time11 = 0;
+unsigned long time12 = 0;
+unsigned long time13 = 0;
+unsigned long time14 = 0;
+unsigned long time15 = 0;
 
  
 Servo right;    // create servo object to control right servo 
