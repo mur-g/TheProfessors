@@ -60,23 +60,23 @@ void loop()
    do                                     // cones 1 and 3, right distance sensor
   {
     forward();
-    analogDistFront = analogRead(A?);
-    if (analogDistFront < 400)            // turn if reached cone
+    analogDistFront = analogRead(A0);
+    if (analogDistFront < 400)            // *****update this value*******
     {
-      turnRight();
-      break;
+      turnRight();                        // turn right if cone reached
+      break;                              // break and go to next loop
     }
-  } while(analogDistFront > 400);
+  } while(analogDistFront > 400);         // *****update this value*******
   
   do                                      // cones 2 and 4, left distance sensor
   {
     forward();
-    analogDistLeft = analogRead(A?);
-    if (analogDistLeft < 200)
+    analogDistLeft = analogRead(A?);      // *****update this value*******
+    if (analogDistLeft < 200)             // *******update this value********
     {
-      turnRight();
-      break;
+      turnRight();                        // turn right if cone reached
+      break;                              // break and go back to first loop
     }
-  } while(analogDistLeft > 200);
+  } while(analogDistLeft > 200);          // *****update this value*******
 */  
 }

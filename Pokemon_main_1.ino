@@ -29,7 +29,8 @@ void setup()
   analogLightRight = analogRead(A2);    // attaches the #5 light sensor to analogread pin 28 
   analogLightLeft = analogRead(A4);     // attaches the #4 light sensor to analogread pin 27
   analogDistFront = analogRead(A0);     // attaches the front distance sensor to analogread pin 26
-  //analogDistRight = analogRead(A?);
+  //analogDistRight = analogRead(A?);   // attaches the right distance sensor to analogread pin ??
+  //analogDistLeft = analogRead(A?);    // attaches the left distance sensor to analogread pin ??
   gate.write(90);     //lift gate up
 
   mainProgram();
@@ -54,10 +55,10 @@ void lineFollow()
   analogLightLeft = analogRead(A4);
   analogDistFront = analogRead(A0);
 
-  if(analogLightRight < analogLightLeft){           // fast line follow code
+  if(analogLightRight < analogLightLeft)           // fast line follow code
+  {
       left.write(150);
       right.write(0);
-            
   }else{
       left.write(180);
       right.write(30);
@@ -81,34 +82,36 @@ void firstPokemon()
   stopCar();
   left.write(180);
   right.write(90);
-  delay(1000);        //wait 1 second for turn
+  delay(1000);                               // wait 1 second for turn
   stopCar();
   
-  delay(4000);
+  delay(4000);                               // wait 4 seconds
+  // write code to lift gate, push pokeball
+  gate.write(90);
   
   left.write(0);
   right.write(90);
-  delay(1000);
+  delay(1000);                               // wait 1 second for turn back
 }
 
 void mainProgram()
 {
   forward();
   boolean dropped = false;
-  do
+  do                                         // line follow until gate is dropped
   {
     lineFollow();
     dropped = dropGate();
   } while(!dropped);
 
   /*
-  do
+  do                                         // line follow until first pokemon is reached
   {
     lineFollow();
-    analogDistRight = analogRead(A?);
-    if (analogDistRight < 400)
-      firstPokemon();
-  } while(analogDistRight > 400);
+    analogDistRight = analogRead(A?);       // *******update this value********
+    if (analogDistRight < 400)              // *******update this value********
+      firstPokemon();                       // if reached, catch first pokemon
+  } while(analogDistRight > 400);           // *******update this value********
   */
   stopCar();
 }
