@@ -44,10 +44,10 @@ void fastlinefollow() {
   analogLightLeft = analogRead(A4);
   if(analogLightRight < analogLightLeft){           // fast line follow code
     left.write(150);                                // useful for following straight lines
-    right.write(0);
-    }
-  else{
-    left.write(180);
+    right.write(0);                                 // USE LEFT SIDE LINE FOLLOW FOR LEFT FIELD
+    }                                               // USE RIGHT SIDE LINE FOLLOW FOR RIGHT FIELD
+  else{                                             // WE NEED TO THINK OF HARDWARE SOLUTIONS FOR QUICK CHANGES
+    left.write(180);                                // ALSO NOT SURE IF THIS CODE IN PARTICULAR FOLLOWS LEFT OR RIGHT
     right.write(30);
     }
 }
@@ -57,10 +57,10 @@ void slowlinefollow() {
   analogLightLeft = analogRead(A4);
   if(analogLightRight < analogLightLeft){     // slow line follow code        
     left.write(100);                          // needed for taking turns to avoid getting off course
-    right.write(50);
-    }
-  else{
-    left.write(140);
+    right.write(50);                          // USE LEFT SIDE LINE FOLLOW FOR LEFT FIELD
+    }                                         // USE RIGHT SIDE LINE FOLLOW FOR RIGHT FIELD
+  else{                                       // WE NEED TO THINK OF HARDWARE SOLUTIONS FOR QUICK CHANGES  
+    left.write(140);                          // ASLO NOT SURE IF THIS CODE IN PARTICULAR FOLLOWS LEFT OR RIGHT
     right.write(80);
     }
 }
