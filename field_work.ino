@@ -39,7 +39,7 @@ void first() {
   delay(500);         // move for .5 sec
 }
 
-void fastlinefollow() {
+void fastLineFollow() {
   analogLightRight = analogRead(A2);
   analogLightLeft = analogRead(A4);
   if(analogLightRight < analogLightLeft){           // fast line follow code
@@ -52,7 +52,7 @@ void fastlinefollow() {
     }
 }
 
-void slowlinefollow() {
+void slowLineFollow() {
   analogLightRight = analogRead(A2);
   analogLightLeft = analogRead(A4);
   if(analogLightRight < analogLightLeft){     // slow line follow code        
@@ -65,7 +65,7 @@ void slowlinefollow() {
     }
 }
 
-void greatball() {
+void greatBall() {
   analogLightRight = analogRead(A2);
   analogLightLeft = analogRead(A4);
   analogDistFRight = analogRead(A0);
@@ -85,7 +85,7 @@ void greatball() {
   }
 }
 
-void pivotzaptos() {
+void zaptosPivot() {
   right.write(90);                              // stop and raise the gate
   left.write(90);
   gate.write(90);
@@ -105,25 +105,25 @@ void loop() {
 
   do {
     analogDistFRight = analogRead(A0);
-    fastlinefollow();
+    fastLineFollow();
     } while(analogDistFRight < 900);             // loop until front distance reads wall is 10cm away
 
   time1 = millis();                             // take the time
   do {
     time2 = millis();                           // take the time at the start of each loop
     gate.write(0);                              // lower front gate to capture first pokeball
-    slowlinefollow();
+    slowLineFollow();
     } while(time2 - time1 < 2000);              // loop for 2.5 sec
 
   time3 = millis();                             // take the time
   do {
     time4 = millis();                           // take the time at the start of each loop
-    fastlinefollow();                           // will capture two middle pokemon at this time   
+    fastLineFollow();                           // will capture two middle pokemon at this time   
     } while(time4 - time3 < 5000);              // follow the line until the robot has passed the junction
   
   gate.write(90);                               // raise front gate
   
-  greatball();                                  // capture the great ball
+  greatBall();                                  // capture the great ball
 
   right.write(100);
   left.write(100);                            // pivot right until on the line again
@@ -132,28 +132,28 @@ void loop() {
   time5 = millis();                             // take the time
   do {
     time6 = millis();                           // take the time at the start of each loop
-    slowlinefollow();
+    slowLineFollow();
     } while(time6 - time5 < 2000);              // loop for 2.5 sec until the robot finishes the curve
   
   do {
     analogDistFRight = analogRead(A0);
-    fastlinefollow();                             // will capture zaptos at this time
+    fastLineFollow();                             // will capture zaptos at this time
     } while(analogDistFRight < 750);              // loop until front distance reads wall is 40cm away after it captures zaptos
 
-  pivotzaptos();                                  // pivot away from zaptos while raising gate
+  zaptosPivot();                                  // pivot away from zaptos while raising gate
   
   do {
     analogDistFRight = analogRead(A0);
-    fastlinefollow();
+    fastLineFollow();
     } while(analogDistFRight < 900);            // loop until front distance reads wall is 10cm away
   
   time7 = millis();                             // take the time
   do {
     time8 = millis();                           // take the time at the start of each loop
-    slowlinefollow();
+    slowLineFollow();
     } while(time8 - time7 < 2000);              // loop for 2.5 sec until the robot passes the junction  
   
-  greatball();                                  // capture another great ball
+  greatBall();                                  // capture another great ball
   
   right.write(80);
   left.write(80);                             // pivot left until on the line again
@@ -162,7 +162,7 @@ void loop() {
   time9 = millis();                              // take the time
   do {
     time10 = millis();                            // take the time at the start of each loop
-    slowlinefollow();                             // will capture the corner pokemon at this time
+    slowLineFollow();                             // will capture the corner pokemon at this time
     } while(time10 - time9 < 2000);               // loop for 2.5 sec until the robot passes the curve
     
   right.write(90);
