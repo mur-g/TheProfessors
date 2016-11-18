@@ -25,10 +25,11 @@ Servo gate;     // create servo object to control gate servo
 
 
 void setup() {
- 
   right.attach(24);   // attaches the right servo on pin 23 to the servo object 
   left.attach(23);    // attaches the left servo on pin 24 to the servo object
   gate.attach(25);
+ 
+  loop();
 }
 
 void first() {
