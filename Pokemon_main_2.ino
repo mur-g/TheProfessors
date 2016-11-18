@@ -5,8 +5,8 @@
 int analogLightRight = 0;   // variable for #5 light sensor
 int analogLightLeft = 0;    // variable for #4 light sensor
 int analogDistFront = 0;    // variable for front distance sensor
-int analogDistRight = 0;
-int analogDistLeft = 0;
+int analogDistLeft = 0;     // variable for right distance sensor
+int analogDistRight = 0;    // variable for left distance sensor
 unsigned long time1 = 0;    // variables for several timers
 unsigned long time2 = 0;
 
@@ -28,10 +28,10 @@ void setup()
   gate.attach(25);
   analogLightRight = analogRead(A2);    // attaches the #5 light sensor to analogread pin 28 
   analogLightLeft = analogRead(A4);     // attaches the #4 light sensor to analogread pin 27
-  analogDistFront = analogRead(A0);     // attaches the front distance sensor to analogread pin 26
-  //analogDistRight = analogRead(A?);   // attaches the right distance sensor to analogread pin ??
-  //analogDistLeft = analogRead(A?);    // attaches the left distance sensor to analogread pin ??
-  gate.write(90);     //lift gate up
+  analogDistFront = analogRead(A11);     // attaches the front distance sensor to analogread pin 26
+  analogDistRight = analogRead(A9);     // attaches the right distance sensor to analogread pin ??
+  analogDistLeft = analogRead(A8);      // attaches the left distance sensor to analogread pin ??
+  gate.write(90);                       //lift gate up
 
   mainProgram();
   loop();
@@ -53,14 +53,15 @@ void lineFollow()
 {
   analogLightRight = analogRead(A2);
   analogLightLeft = analogRead(A4);
-  analogDistFront = analogRead(A0);
 
-  if(analogLightRight < analogLightLeft)           // fast line follow code
+  if(analogLightRight < analogLightLeft)           // turn right
   {
-      left.write(150);
+      left.write(150);                            
       right.write(0);
             
-  }else{
+  }
+  if (analogLightLeft < analogLightRight)          // turn left
+  {
       left.write(180);
       right.write(30);
   }
@@ -69,8 +70,8 @@ void lineFollow()
 boolean dropGate()
 {
   boolean isDropped = false;
-  analogDistFront = analogRead(A0);
-  if (analogDistFront < 900)
+  analogDistFront = analogRead(A11);
+  if (analogDistFront > 900)           // update value
   {
     gate.write(0);
     isDropped = true;
@@ -103,23 +104,23 @@ void firstPokemon()
 
 void mainProgram()
 {
-  forward();
   boolean dropped = false;
   do
   {
+    forward();
     lineFollow();
     dropped = dropGate();
   } while(!dropped);
 
-  /*
   do                                      // line follow until first pokemon is reached
   {
+    forward();
     lineFollow();
-    analogDistRight = analogRead(A?);     // *******update this value********
-    if (analogDistRight < 400)            // *******update this value********
+    analogDistRight = analogRead(A9);     // check if reached first pokemon
+    if (analogDistRight > 400)            // *******update this value********
       firstPokemon();                     // if reached, catch first pokemon
-  } while(analogDistRight > 400);         // *******update this value********
-  */
+  } while(analogDistRight < 400);         // *******update this value********
+  
   stopCar();
 }
 
