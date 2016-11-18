@@ -71,10 +71,10 @@ void fastLineFollowRight() {                        // fast RIGHT side line foll
 
 void fastLineFollow() {
   if (/*left side of field*/) {               // will capture two middle pokemon at this time
-      fastLineFollowLeft(); 
+    fastLineFollowLeft(); 
     }
-    if (/*right side of field*/) {
-      fastLineFollowRight();
+  if (/*right side of field*/) {
+    fastLineFollowRight();
     }       
 }
 
@@ -163,7 +163,7 @@ void greatBall() {
   if (/*left side of field*/) {               // will capture two middle pokemon at this time
       greatBallLeft(); 
     }
-    if (/*right side of field*/) {
+  if (/*right side of field*/) {
       greatBallRight();
     }       
 }
