@@ -46,6 +46,7 @@ void setup() {
 
 void first() {
   delay(100);           // delay to allow power spike to pass
+  gate.write(90);
   left.write(130);      // set left motor to forward
   right.write(30);      // set right motor to forward
   delay(250);           // move for .5 sec
@@ -184,7 +185,7 @@ void greatBallRight() {                           // capturing the great ball fo
   if (SWITCH2 == HIGH) {                          // if before reset
     right.write(70);
     left.write(70);                               // pivot left until on the line again
-    delay(1500);   
+    delay(1500); 
   }
   if (SWITCH2 == LOW) {                           // if after reset
     right.write(110);
@@ -244,7 +245,7 @@ void loop() {
       do {
         time4 = millis();                           // take the time at the start of each loop                             
         lineFollowRight();
-      } while(time4 - time3 < 13750);              // follow the line until the robot has passed the junction // 13000   
+      } while(time4 - time3 < 15750);              // follow the line until the robot has passed the junction // 13000   
     }
 
     gate.write(90);                               // raise front gate
@@ -282,7 +283,7 @@ void loop() {
       do {
         time9 = millis();
         lineFollowRight();
-      } while(time9 - time8 < 13750);
+      } while(time9 - time8 < 15750);
   
     greatBall();                                  // capture another great ball
 
