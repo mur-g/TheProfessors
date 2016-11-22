@@ -8,10 +8,6 @@ int analogLightRight = 0;   // variable for #3 light sensor
 int analogLightLeft = 0;    // variable for #5 light sensor
 // black is a high value and white is a low value
 
-int analogDistFRight = 0;   // variable for front right distance sensor
-int analogDistFCenter = 0;  // variable for front center distance sensor
-// higher values are closer, lower values are farther away
-
 unsigned long time1 = 0;    // variables for several timers
 unsigned long time2 = 0;
 unsigned long time3 = 0;
@@ -143,15 +139,15 @@ void greatBallLeft() {                            // capturing the great ball fo
   right.write(110);                             // slowly pivot toward the great ball
   left.write(110);
   delay(1500);
-  right.write(90);
+  right.write(90);                              // pause
   left.write(90);
   delay(1000);
-  right.write(40);
+  right.write(40);                              // move forward
   left.write(120);
   delay(200);
   gate.write(0);                                // lower front gate  
   delay(500);
-  right.write(120);
+  right.write(120);                             // move backward
   left.write(40);
   delay(500);
   resetSwitch();
@@ -171,15 +167,15 @@ void greatBallRight() {                           // capturing the great ball fo
   right.write(70);                              // slowly pivot toward the great ball
   left.write(70);
   delay(1500);
-  right.write(90);
+  right.write(90);                              // pause
   left.write(90);
   delay(1000);
-  right.write(40);
+  right.write(40);                              // move forward
   left.write(120);
   delay(200);
   gate.write(0);                                // drop the front gate
   delay(500);
-  right.write(120);
+  right.write(120);                             // move backward
   left.write(40);
   delay(500);
   if (SWITCH2 == HIGH) {                          // if before reset
@@ -209,9 +205,7 @@ void loop() {
   analogLightCenter = analogRead(A0);             // attaches the #4 center light sensor to analog pin 0
   analogLightRight = analogRead(A1);              // attaches the #3 right light sensor to analog pin 1 
   analogLightLeft = analogRead(A2);               // attaches the #5 left light sensor to analog pin 2
-  analogDistFRight = analogRead(A8);              // attaches the front right distance sensor to analog pin 4
-  analogDistFCenter = analogRead(A11);            // attaches the front center distance sensor to analog pin 11 
-
+  
   resetSwitch();
   if (SWITCH2 == HIGH) {                          // run this code if reset switch is off
     first();
@@ -222,11 +216,11 @@ void loop() {
       do {
         time2 = millis();
         lineFollowLeft();
-      } while(time2 - time1 < 2500);                          
+      } while(time2 - time1 < 2500);              // line follow for two and a half seconds                        
     }
     if (SWITCH1 == LOW) {                         // if we're on the right side of the field
       do {
-        time2 = millis();
+        time2 = millis();                         // line follow for three seconds
         lineFollowRight();
       } while(time2 - time1 < 3000);             
     }
@@ -245,7 +239,7 @@ void loop() {
       do {
         time4 = millis();                           // take the time at the start of each loop                             
         lineFollowRight();
-      } while(time4 - time3 < 15750);              // follow the line until the robot has passed the junction // 13000   
+      } while(time4 - time3 < 15750);              // follow the line until the robot has passed the junction // 15000   
     }
 
     gate.write(90);                               // raise front gate
