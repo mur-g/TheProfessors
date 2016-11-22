@@ -22,6 +22,7 @@ unsigned long time7 = 0;
 unsigned long time8 = 0;
 unsigned long time9 = 0;
 unsigned long time10 = 0;
+unsigned long time11 = 0;
 
 Servo right;    // create servo object to control right servo 
 Servo left;     // create servo object to control left servo
@@ -112,7 +113,7 @@ void lineFollowRight() {                        // RIGHT side line follow code
     right.write(30);                                                                            // turn left
     left.write(100);
   }
-  if(analogLightCenter > 4000 and analogLightRight > 4000 and analogLightLeft > 4000) {         // if all are black
+  if(analogLightCenter > 3000 and analogLightRight > 3000 and analogLightLeft > 3000) {         // if all are black
     right.write(80);                                                                            // turn right
     left.write(120);
   }
@@ -215,52 +216,81 @@ void loop() {
     first();
 
     time1 = millis();
-    do {
-      time2 = millis();
-      lineFollow();
-      } while(time2 - time1 < 2250);           // follow the line until front distance reads wall is 10cm away
+    fieldSwitch();
+    if (SWITCH1 == HIGH) {                        // if we're on the left side of the field    
+      do {
+        time2 = millis();
+        lineFollowLeft();
+      } while(time2 - time1 < 2500);                          
+    }
+    if (SWITCH1 == LOW) {                         // if we're on the right side of the field
+      do {
+        time2 = millis();
+        lineFollowRight();
+      } while(time2 - time1 < 3000);             
+    }
 
     gate.write(0);                                // lower front gate to capture first pokeball  
 
     time3 = millis();                             // take the time
-    do {
-      time4 = millis();                           // take the time at the start of each loop                             
-      lineFollow();
-      } while(time4 - time3 < 13000);              // follow the line until the robot has passed the junction
+    fieldSwitch();
+    if (SWITCH1 == HIGH) {                        // if we're on the left side of the field    
+      do {
+        time4 = millis();                           // take the time at the start of each loop                             
+        lineFollowLeft();
+      } while(time4 - time3 < 12750);              // follow the line until the robot has passed the junction // 13000              
+    }
+    if (SWITCH1 == LOW) {                         // if we're on the right side of the field
+      do {
+        time4 = millis();                           // take the time at the start of each loop                             
+        lineFollowRight();
+      } while(time4 - time3 < 13750);              // follow the line until the robot has passed the junction // 13000   
+    }
 
     gate.write(90);                               // raise front gate
   
     greatBall();                                  // capture the great ball
   
     time5 = millis();                             // take the time
-    do {
-      time6 = millis();                           // take the time at the start of each loop
-      lineFollow();
-      } while(time6 - time5 < 2000);              // line follow for 2.5 sec until the robot finishes the curve
-  
-    do {
-      analogDistFRight = analogRead(A8);
-      lineFollow();                               // will capture zaptos at this time
-      } while(analogDistFRight < 1800);           // loop until front distance reads wall is 40cm away after it captures zaptos
+    fieldSwitch();
+    if (SWITCH1 == HIGH) {                        // if we're on the left side of the field    
+      do {
+        time6 = millis();                           // take the time at the start of each loop
+        lineFollowLeft();
+      } while(time6 - time5 < 20000);              // line follow for 2.5 sec until the robot finishes the curve             
     }
+    if (SWITCH1 == LOW) {                         // if we're on the right side of the field
+      do {
+        time6 = millis();                           // take the time at the start of each loop
+        lineFollowRight();
+      } while(time6 - time5 < 20000);              // line follow for 2.5 sec until the robot finishes the curve 
+    }
+  }
 
   resetSwitch();
   if (SWITCH2 == LOW) {                           // run this code if reset switch is on
     first();
     
-    time7 = millis();                             // take the time
-    do {
-      time8 = millis();                           // take the time at the start of each loop
-      lineFollow();
-      } while(time8 - time7 < 15000);              // follow the line until the robot passes the junction  
+    time8 = millis();                             // take the time
+    fieldSwitch();
+    if(SWITCH1 == HIGH);
+      do {
+        time9 = millis();                           // take the time at the start of each loop
+        lineFollowLeft();
+        } while(time9 - time8 < 12750);              // follow the line until the robot passes the junction  
+    if(SWITCH2 == LOW);
+      do {
+        time9 = millis();
+        lineFollowRight();
+      } while(time9 - time8 < 13750);
   
     greatBall();                                  // capture another great ball
 
-    time9 = millis();                             // take the time
+    time10 = millis();                             // take the time
     do {
-      time10 = millis();                           // take the time at the start of each loop
+      time11 = millis();                           // take the time at the start of each loop
       lineFollow();                               // will capture the corner pokemon at this time
-      } while(time10 - time9 < 10000);              // loop for 2.5 sec until the robot passes the curve
+      } while(time11 - time10 < 15000);              // loop for 2.5 sec until the robot passes the curve
     
     right.write(90);
     left.write(90);
